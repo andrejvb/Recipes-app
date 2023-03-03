@@ -8,7 +8,7 @@ export default function Login() {
 
   //   const validation = senha.length <= mini && email.length <= mini;
   useEffect(() => {
-    const regex = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/g;
+    const regex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\)?$/i;
     const validationn = regex.test(email);
     setValidation(validationn);
   }, [email]);
