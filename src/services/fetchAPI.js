@@ -1,5 +1,5 @@
 const MEAL_API_URL = 'https://www.themealdb.com/api/json/v1/1/filter.php?';
-const DRINK_API_URL = 'www.thecocktaildb.com/api/json/v1/1/search.php?';
+const DRINK_API_URL = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?';
 
 async function fetchByFilter(url, filter) {
   const result = await fetch(url.concat(filter));
