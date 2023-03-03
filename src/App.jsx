@@ -1,10 +1,11 @@
 import React from 'react';
 import './App.css';
-// import rockGlass from './images/rockGlass.svg';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router-dom';
+import Recipes from './PagesRecipes/Recipes';
 import SearchBar from './components/SearchBar';
 import Header from './components/Header';
+// import rockGlass from './images/rockGlass.svg';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Switch>
         <Route path="/" component={ SearchBar } />
         <Route path="/meals" component={ SearchBar } />
+        <Route path="/drinks" component={ Recipes } />
       </Switch>
       <Header />
     </>
