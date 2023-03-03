@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Footer from './Footer';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -42,6 +43,7 @@ export default function Login() {
           Enter
         </button>
       </form>
+      <Footer />
     </div>
   );
 }
