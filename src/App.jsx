@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
+import Login from './components/Login';
 import Recipes from './PagesRecipes/Recipes';
 import SearchBar from './components/SearchBar';
 import Header from './components/Header';
@@ -21,7 +22,7 @@ function App() {
     // </div>
     <>
       <Switch>
-        <Route path="/" component={ SearchBar } />
+        <Route exact path="/" component={ Login } />
         <Route path="/meals" component={ SearchBar } />
         <Route path="/drinks" component={ Recipes } />
       </Switch>
