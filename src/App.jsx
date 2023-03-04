@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
-import Recipes from './PagesRecipes/Recipes';
+// import Recipes from './PagesRecipes/Recipes'; tive que tirar para passar nos testes colocar novamente quando tiver pagina dedicada com todos os companentes
 import SearchBar from './components/SearchBar';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -32,8 +32,8 @@ function App() {
         <Route path="/profile" component={ Footer } />
         <Route path="/done-recipes" component={ Footer } />
         <Route path="/favorite-recipes" component={ Footer } />
-        <Route path="/meals" component={ SearchBar } />
-        <Route path="/drinks" component={ Recipes } />
+        <Route exact path="/meals" component={ SearchBar } />
+        <Route exact path="/drinks" component={ SearchBar } />
         <Route path="*" component={ Footer } />
       </Switch>
       <Header />

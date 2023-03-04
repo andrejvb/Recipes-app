@@ -6,7 +6,7 @@ import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 
 function Header() {
-  const pathName = useLocation();
+  const { pathname } = useLocation();
   return (
     <header>
       <section className="boxHeader">
@@ -22,8 +22,8 @@ function Header() {
           alt="Search Icon"
         />
         <section className="meals">
-          <h2 data-testid="page-title">{pathName}</h2>
-          {pathName === 'meals'
+          <h2 data-testid="page-title">{ pathname }</h2>
+          {pathname === '/meals'
             ? <img src={ mealIcon } alt="Icon of meals" />
             : <img src={ drinkIcon } alt="Icon of drinks" />}
         </section>
