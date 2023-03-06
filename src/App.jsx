@@ -8,6 +8,7 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 import DoneRecipes from './pages/DoneRecipes';
 import RecipeInProgress from './pages/RecipeInProgress';
 import Profile from './pages/Profile';
+import { RecipeProvider } from './context/recipes';
 // import rockGlass from './images/rockGlass.svg';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -23,7 +24,7 @@ function App() {
     //     Glass
     //   </object>
     // </div>
-    <>
+    <RecipeProvider>
       <Switch>
         <Route path="/meals/:idMeal" component={ RecipeDetails } />
         <Route path="/drinks/:idDrink" component={ RecipeDetails } />
@@ -52,7 +53,7 @@ function App() {
           </Route>
         </Route>
       </Routes> */}
-    </>
+    </RecipeProvider>
   );
 }
 

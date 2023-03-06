@@ -1,65 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import ButtonRecipes from '../components/ButtonRecipes';
 import SearchBar from '../components/SearchBar';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import { apiRecipesDrinks } from '../ServicesRecipes/apiDrinks';
 import { apiRecipesFood } from '../ServicesRecipes/apiFood';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { RecipeContext } from '../context/recipes';
+import Card from '../components/Card';
+// import { useLocation } from 'react-router-dom';
+
+const MAX_RECIPES = 12;
 
 function Recipes() {
-  const { pathname } = useLocation();
-  const [mealsApi, setMealsApi] = useState([]);
-  const [drinksApi, setDrinksApi] = useState([]);
-  // console.log(pathname);
+  const { recipes, setRecipes } = useContext(RecipeContext);
+  const { pathname } = useLocation(); // usado para acessar as telas /meals e /drinks
 
-  const renderizaApi = async () => {
+  const renderizaApi = useCallback(async () => { // renderizando as api's para serem usada
     const mealsDados = await apiRecipesFood();
-    setMealsApi(mealsDados.meals);
     const drinksDados = await apiRecipesDrinks();
-    setDrinksApi(drinksDados.drinks);
-    console.log(mealsDados);
-  };
+    if (pathname === '/meals') setRecipes(mealsDados.meals.slice(0, MAX_RECIPES));
+    else setRecipes(drinksDados.drinks.slice(0, MAX_RECIPES));
+  }, [pathname, setRecipes]);
 
-  useEffect(() => {
+  useEffect(() => { // chamando a função  das api's
     renderizaApi();
-  }, []);
-
-  const numberPathName = 12;
+  }, [renderizaApi]);
 
   return (
     <div>
       <Header />
       <SearchBar />
-      { pathname === '/meals'
-        ? (mealsApi.slice(0, numberPathName).map((e, index) => (
-          <div
-            key={ e.idMeal }
-            data-testid={ `"${index}-recipe-card"` }
-          >
-            <p data-testid={ `"${index}-card-name"` }>
-              { e.strMeal }
-            </p>
-            <img
-              src={ e.strMealThumb }
-              alt="food"
-              data-testid={ `"${index}-card-img"` }
-            />
-          </div>
-        ))) : (drinksApi.slice(0, numberPathName).map((e, index) => (
-          <div
-            key={ e.idDrinks }
-            data-testid={ `"${index}-recipe-card"` }
-          >
-            <p data-testid={ `"${index}-card-name"` }>
-              { e.strDrink }
-            </p>
-            <img
-              src={ e.strDrink }
-              alt="drink"
-              data-testid={ `"${index}-card-img"` }
-            />
-          </div>
-        )))}
+      <ButtonRecipes />
+      <ul>
+        {pathname === '/meals'
+          ? recipes.map(({ idMeal, strMeal, strMealThumb }, idx) => (
+            <li key={ idMeal }>
+              <Card index={ idx } title={ strMeal } thumb={ strMealThumb } />
+            </li>
+          ))
+          : recipes.map(({ strDrink, strDrinkThumb, idDrink }, idx) => (
+            <li key={ idDrink }>
+              <Card index={ idx } title={ strDrink } thumb={ strDrinkThumb } />
+            </li>
+          ))}
+      </ul>
       <Footer />
     </div>
   );
