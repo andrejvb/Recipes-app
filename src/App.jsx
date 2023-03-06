@@ -3,7 +3,7 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
 import Recipes from './PagesRecipes/Recipes';
-import SearchBar from './components/SearchBar';
+// import SearchBar from './components/SearchBar';
 import Header from './components/Header';
 import Footer from './components/Footer';
 // import rockGlass from './images/rockGlass.svg';
@@ -32,7 +32,7 @@ function App() {
         <Route path="/profile" component={ Footer } />
         <Route path="/done-recipes" component={ Footer } />
         <Route path="/favorite-recipes" component={ Footer } />
-        <Route path="/meals" component={ SearchBar } />
+        <Route path="/meals" component={ Recipes } />
         <Route path="/drinks" component={ Recipes } />
         <Route path="*" component={ Footer } />
       </Switch>
