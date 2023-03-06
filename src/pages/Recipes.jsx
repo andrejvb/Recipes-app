@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Footer from '../components/Footer';
 import SearchBar from '../components/SearchBar';
 import { apiRecipesDrinks } from '../ServicesRecipes/apiDrinks';
 import { apiRecipesFood } from '../ServicesRecipes/apiFood';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 function Recipes() {
   const { pathname } = useLocation();
@@ -27,6 +28,7 @@ function Recipes() {
 
   return (
     <div>
+      <Header />
       <SearchBar />
       { pathname === '/meals'
         ? (mealsApi.slice(0, numberPathName).map((e, index) => (

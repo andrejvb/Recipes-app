@@ -3,7 +3,12 @@ import React from 'react';
 
 function Details() {
   return (
-    <div>Details</div>
+    <section>
+      <h1 data-testid="recipe-title">{ 'ha ' }</h1>
+      <img data-testid="recipe-photo" src="" alt="" />
+      <p data-testid="recipe-category" />
+
+    </section>
   );
 }
 

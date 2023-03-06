@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useRouteMatch } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { fetchDrinkByLookup, fetchMealByLookup } from '../services/fetchAPI';
 // import PropTypes from 'prop-types';
 
 function RecipeDetails() {
-  const { params: { idMeal, idDrink } } = useRouteMatch();
-  console.log(idMeal, idDrink);
+  const { idMeal, idDrink } = useParams();
   const [recipe, setRecipe] = useState({});
+
   useEffect(() => {
     let fetched;
     if (idMeal !== undefined) fetched = fetchMealByLookup(idMeal);
