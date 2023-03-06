@@ -2,10 +2,13 @@ import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './components/Login';
-import Recipes from './PagesRecipes/Recipes';
-// import SearchBar from './components/SearchBar';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Recipes from './pages/Recipes';
+import RecipeDetails from './pages/RecipeDetails';
+import FavoriteRecipes from './pages/FavoriteRecipes';
+import DoneRecipes from './pages/DoneRecipes';
+import RecipeInProgress from './pages/RecipeInProgress';
+import Profile from './pages/Profile';
+import { RecipeProvider } from './context/recipes';
 // import rockGlass from './images/rockGlass.svg';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -21,23 +24,36 @@ function App() {
     //     Glass
     //   </object>
     // </div>
-    <>
+    <RecipeProvider>
       <Switch>
+        <Route path="/meals/:idMeal" component={ RecipeDetails } />
+        <Route path="/drinks/:idDrink" component={ RecipeDetails } />
+        <Route path="/meals/:idMeal/progress" component={ RecipeInProgress } />
+        <Route path="/drinks/:idDrink/progress" component={ RecipeInProgress } />
+        <Route path="/profile" component={ Profile } />
+        <Route path="/done-recipes" component={ DoneRecipes } />
+        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route exact path="/meals" component={ Recipes } />
+        <Route exact path="/drinks" component={ Recipes } />
         <Route exact path="/" component={ Login } />
-        <Route path="/meals/:id-da-receita" component={ Footer } />
-        <Route path="/drinks/:id-da-receita" component={ Footer } />
-        <Route path="/meals/:id-da-receita/in-progress" component={ Footer } />
-        <Route path="/drinks/:id-da-receita/in-progress" component={ Footer } />
-        {/* Precisa ter componente <Footer/> no final do componente */}
-        <Route path="/profile" component={ Footer } />
-        <Route path="/done-recipes" component={ Footer } />
-        <Route path="/favorite-recipes" component={ Footer } />
-        <Route path="/meals" component={ Recipes } />
-        <Route path="/drinks" component={ Recipes } />
-        <Route path="*" component={ Footer } />
+        <Route path="*" component={ Login } />
       </Switch>
-      <Header />
-    </>
+      {/* <Routes>
+        <Route path="/">
+          <Route index element={ <Login /> } />
+          <Route path="meals" element={ <Recipes /> }>
+            <Route path=":mealId" element={ <RecipeDetails /> }>
+              <Route path="progress" element={ <Footer /> } />
+            </Route>
+          </Route>
+          <Route path="drinks" element={ <Recipes /> }>
+            <Route path=":drinkId" element={ <RecipeDetails /> }>
+              <Route path="progress" element={ <Footer /> } />
+            </Route>
+          </Route>
+        </Route>
+      </Routes> */}
+    </RecipeProvider>
   );
 }
 
