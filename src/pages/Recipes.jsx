@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ButtonRecipes from '../components/ButtonRecipes';
 import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
@@ -14,6 +14,7 @@ const MAX_RECIPES = 12;
 
 function Recipes() {
   const { recipes, setRecipes } = useContext(RecipeContext);
+  // console.log(recipes);
   const { pathname } = useLocation(); // usado para acessar as telas /meals e /drinks
 
   const renderizaApi = useCallback(async () => { // renderizando as api's para serem usada
@@ -35,16 +36,27 @@ function Recipes() {
       <ul>
         {pathname === '/meals'
           ? recipes.slice(0, MAX_RECIPES)
-            .map(({ idMeal, strMeal, strMealThumb }, idx) => (
-              <li key={ idMeal }>
-                <Card index={ idx } title={ strMeal } thumb={ strMealThumb } />
-              </li>
+            .map(({ idMeal, strMeal, strMealThumb,
+            }, idx) => (
+              <Link
+                key={ idMeal }
+                to={ `/meals/${idMeal}` }
+              >
+                <li key={ idMeal }>
+                  <Card index={ idx } title={ strMeal } thumb={ strMealThumb } />
+                </li>
+              </Link>
             ))
           : recipes.slice(0, MAX_RECIPES)
             .map(({ strDrink, strDrinkThumb, idDrink }, idx) => (
-              <li key={ idDrink }>
-                <Card index={ idx } title={ strDrink } thumb={ strDrinkThumb } />
-              </li>
+              <Link
+                key={ idDrink }
+                to={ `/drinks/${idDrink}` }
+              >
+                <li key={ idDrink }>
+                  <Card index={ idx } title={ strDrink } thumb={ strDrinkThumb } />
+                </li>
+              </Link>
             ))}
       </ul>
       <Footer />

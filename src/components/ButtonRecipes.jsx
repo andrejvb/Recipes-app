@@ -9,6 +9,9 @@ function ButtonRecipes() {
   const [mealsSet, setMealsSet] = useState([]); // armazena as categorias da api food
   const [drinkSet, setDrinkSet] = useState([]); // armazena as categorias da api drink
   const { setRecipes } = useContext(RecipeContext);
+  // const [setSituacao] = useState(true);
+  const [category, setCategory] = useState('All');
+  // console.log(recipes);
 
   const renderizaApiSet = async () => { // renderizando as api's para serem usadas
     const mealsSetDados = await apiRecipesSetFood();
@@ -25,7 +28,7 @@ function ButtonRecipes() {
 
   const numberCategory = 5; // precisa armazenar para usar no slice
 
-  const apiButton = async (e) => {
+  const apiButton = async (e) => { // usada para o filtro do requsiito 21, para filtrar por categorias
     const mealsApi = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${e}`;
     const drinksApi = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${e}`;
     const createCondicao = pathname === '/meals' ? mealsApi : drinksApi;
@@ -33,13 +36,27 @@ function ButtonRecipes() {
     const apiFoodResponse = await fetchApiFood.json();
     // console.log(apiFoodResponse[pathname.split('/')[1]]);
     setRecipes(apiFoodResponse[pathname.split('/')[1]]);
+    setCategory(e);
+    /* if (e !== recipes) {
+      setSituacao(true);
+    } */
   };
 
-  const handleClean = async () => {
+  const handleClean = async () => { // usada para o requisito 21 para o botão all retonar as receitas iniciais
     const mealsDados = await apiRecipesFood();
     const drinksDados = await apiRecipesDrinks();
+    console.log(mealsDados);
     if (pathname === '/meals') setRecipes(mealsDados.meals);
     else setRecipes(drinksDados.drinks);
+    setCategory('All');
+  };
+
+  const changeCategory = (e) => { // usada para o requisito 22, para ao clicar novamente na categoria, volta para as receitas iniciais
+    if (category === e) {
+      handleClean();
+    } else {
+      apiButton(e);
+    }
   };
 
   return (
@@ -49,7 +66,7 @@ function ButtonRecipes() {
           <button
             key={ e }
             data-testid={ `${e}-category-filter` }
-            onClick={ () => apiButton(e) }
+            onClick={ () => changeCategory(e) }
           >
             { e }
           </button>
@@ -57,7 +74,7 @@ function ButtonRecipes() {
           <button
             key={ e }
             data-testid={ `${e}-category-filter` }
-            onClick={ () => apiButton(e) }
+            onClick={ () => changeCategory(e) }
           >
             { e }
           </button>
