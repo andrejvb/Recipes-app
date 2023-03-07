@@ -51,7 +51,7 @@ function ButtonRecipes() {
     setCategory('All');
   };
 
-  const changeCategory = (e) => {
+  const changeCategory = (e) => { // usada para o requisito 22, para ao clicar novamente na categoria, volta para as receitas iniciais
     if (category === e) {
       handleClean();
     } else {
