@@ -26,10 +26,10 @@ function App() {
     // </div>
     <RecipeProvider>
       <Switch>
+        <Route path="/meals/:idMeal/in-progress" component={ RecipeInProgress } />
+        <Route path="/drinks/:idDrink/in-progress" component={ RecipeInProgress } />
         <Route path="/meals/:idMeal" component={ RecipeDetails } />
         <Route path="/drinks/:idDrink" component={ RecipeDetails } />
-        <Route path="/meals/:idMeal/progress" component={ RecipeInProgress } />
-        <Route path="/drinks/:idDrink/progress" component={ RecipeInProgress } />
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
