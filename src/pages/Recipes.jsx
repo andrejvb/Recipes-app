@@ -8,7 +8,6 @@ import { apiRecipesDrinks } from '../ServicesRecipes/apiDrinks';
 import { apiRecipesFood } from '../ServicesRecipes/apiFood';
 import { RecipeContext } from '../context/recipes';
 import Card from '../components/Card';
-// import { useLocation } from 'react-router-dom';
 
 const MAX_RECIPES = 12;
 
@@ -19,8 +18,8 @@ function Recipes() {
   const renderizaApi = useCallback(async () => { // renderizando as api's para serem usada
     const mealsDados = await apiRecipesFood();
     const drinksDados = await apiRecipesDrinks();
-    if (pathname === '/meals') setRecipes(mealsDados.meals.slice(0, MAX_RECIPES));
-    else setRecipes(drinksDados.drinks.slice(0, MAX_RECIPES));
+    if (pathname === '/meals') setRecipes(mealsDados.meals?.slice(0, MAX_RECIPES));
+    else setRecipes(drinksDados.drinks?.slice(0, MAX_RECIPES));
   }, [pathname, setRecipes]);
 
   useEffect(() => { // chamando a função  das api's
@@ -34,12 +33,12 @@ function Recipes() {
       <ButtonRecipes />
       <ul>
         {pathname === '/meals'
-          ? recipes.map(({ idMeal, strMeal, strMealThumb }, idx) => (
+          ? recipes?.map(({ idMeal, strMeal, strMealThumb }, idx) => (
             <li key={ idMeal }>
               <Card index={ idx } title={ strMeal } thumb={ strMealThumb } />
             </li>
           ))
-          : recipes.map(({ strDrink, strDrinkThumb, idDrink }, idx) => (
+          : recipes?.map(({ strDrink, strDrinkThumb, idDrink }, idx) => (
             <li key={ idDrink }>
               <Card index={ idx } title={ strDrink } thumb={ strDrinkThumb } />
             </li>
