@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
+import SearchBar from './SearchBar';
+// import '../style/Header.css';
 
 function Header() {
+  const [startSearch, setStartSearch] = useState(false);
   const { pathname } = useLocation();
 
   function pathExclusive(path) {
@@ -35,10 +38,10 @@ function Header() {
       search = true;
       break;
     default:
-      break;
     }
     return [title, icon, search];
   }
+
   const [title, icon, search] = pathExclusive(pathname);
   return (
     <header>
@@ -52,16 +55,22 @@ function Header() {
           />
         </Link>
         {search || (
-          <img
+          <button
+            // className="buttonSearch"
+            type="button"
             data-testid="search-top-btn"
+            value={ startSearch }
+            onClick={ () => setStartSearch(!startSearch) }
             src={ searchIcon }
-            alt="Search Icon"
-          />
+          >
+            <img src={ searchIcon } alt="Search Icon" />
+          </button>
         )}
         <section className="meals">
           <h2 data-testid="page-title">{ title }</h2>
           <img src={ icon } alt="Icon" />
         </section>
+        { startSearch === true ? <SearchBar /> : null}
       </section>
     </header>
   );

@@ -8,6 +8,7 @@ import { genFetchFunction } from './helpers/mockHelper';
 const searchInputDtid = 'search-input';
 const execSearchBtnDtid = 'exec-search-btn';
 const nameSearchRadioDtid = 'name-search-radio';
+const searchTopBtn = 'search-top-btn';
 
 describe('test SearchBar on /meals', () => {
   test('if it render search bar on /meals', async () => {
@@ -17,6 +18,7 @@ describe('test SearchBar on /meals', () => {
     await act(async () => {
       await Promise.all(promisses);
     });
+    userEvent.click(screen.getByTestId(searchTopBtn));
     expect(screen.getByText(/Search/i)).toBeInTheDocument();
   });
   test('if it query by search name with 0 results and display alert', async () => {
@@ -24,6 +26,7 @@ describe('test SearchBar on /meals', () => {
     const promisses = [];
     global.fetch = jest.fn(genFetchFunction(promisses));
     renderWithRouter(<Page />, '/meals');
+    userEvent.click(screen.getByTestId(searchTopBtn));
     userEvent.type(screen.getByTestId(searchInputDtid), 'xablau');
     userEvent.click(screen.getByTestId('ingredient-search-radio'));
     userEvent.click(screen.getByTestId(execSearchBtnDtid));
@@ -40,6 +43,7 @@ describe('test SearchBar on /meals', () => {
     await act(async () => {
       await Promise.all(promisses);
     });
+    userEvent.click(screen.getByTestId(searchTopBtn));
     userEvent.type(screen.getByTestId(searchInputDtid), 'pasta');
     userEvent.click(screen.getByTestId('first-letter-search-radio'));
     userEvent.click(screen.getByTestId(execSearchBtnDtid));
@@ -49,6 +53,7 @@ describe('test SearchBar on /meals', () => {
     const promisses = [];
     global.fetch = jest.fn(genFetchFunction(promisses));
     renderWithRouter(<Page />, '/meals');
+    userEvent.click(screen.getByTestId(searchTopBtn));
     userEvent.type(screen.getByTestId(searchInputDtid), 'soup');
     userEvent.click(screen.getByTestId(nameSearchRadioDtid));
     userEvent.click(screen.getByTestId(execSearchBtnDtid));
@@ -61,6 +66,7 @@ describe('test SearchBar on /meals', () => {
     const promisses = [];
     global.fetch = jest.fn(genFetchFunction(promisses));
     renderWithRouter(<Page />, '/meals');
+    userEvent.click(screen.getByTestId(searchTopBtn));
     userEvent.type(screen.getByTestId(searchInputDtid), 'Arrabiata');
     userEvent.click(screen.getByTestId(nameSearchRadioDtid));
     userEvent.click(screen.getByTestId(execSearchBtnDtid));
@@ -80,6 +86,7 @@ describe('test SearchBar on /drinks', () => {
     await act(async () => {
       await Promise.all(promisses);
     });
+    userEvent.click(screen.getByTestId(searchTopBtn));
     expect(screen.getByText(/Search/i)).toBeInTheDocument();
   });
   test('if it query by search name with 0 results and display alert', async () => {
@@ -87,6 +94,7 @@ describe('test SearchBar on /drinks', () => {
     const promisses = [];
     global.fetch = jest.fn(genFetchFunction(promisses));
     renderWithRouter(<Page />, '/drinks');
+    userEvent.click(screen.getByTestId(searchTopBtn));
     userEvent.type(screen.getByTestId(searchInputDtid), 'xablau');
     userEvent.click(screen.getByTestId('ingredient-search-radio'));
     userEvent.click(screen.getByTestId(execSearchBtnDtid));
@@ -100,6 +108,7 @@ describe('test SearchBar on /drinks', () => {
     const promisses = [];
     global.fetch = jest.fn(genFetchFunction(promisses));
     renderWithRouter(<Page />, '/drinks');
+    userEvent.click(screen.getByTestId(searchTopBtn));
     userEvent.type(screen.getByTestId(searchInputDtid), 'pasta');
     userEvent.click(screen.getByTestId('first-letter-search-radio'));
     userEvent.click(screen.getByTestId(execSearchBtnDtid));
@@ -112,6 +121,7 @@ describe('test SearchBar on /drinks', () => {
     const promisses = [];
     global.fetch = jest.fn(genFetchFunction(promisses));
     renderWithRouter(<Page />, '/drinks');
+    userEvent.click(screen.getByTestId(searchTopBtn));
     userEvent.type(screen.getByTestId(searchInputDtid), 'gin');
     userEvent.click(screen.getByTestId(nameSearchRadioDtid));
     userEvent.click(screen.getByTestId(execSearchBtnDtid));
@@ -124,6 +134,7 @@ describe('test SearchBar on /drinks', () => {
     const promisses = [];
     global.fetch = jest.fn(genFetchFunction(promisses));
     renderWithRouter(<Page />, '/drinks');
+    userEvent.click(screen.getByTestId(searchTopBtn));
     userEvent.type(screen.getByTestId(searchInputDtid), 'Aquamarine');
     userEvent.click(screen.getByTestId(nameSearchRadioDtid));
     userEvent.click(screen.getByTestId(execSearchBtnDtid));
