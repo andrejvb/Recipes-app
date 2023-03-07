@@ -38,7 +38,6 @@ function Header() {
       search = true;
       break;
     default:
-      break;
     }
     return [title, icon, search];
   }

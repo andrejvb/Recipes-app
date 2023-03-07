@@ -7,7 +7,6 @@ import { apiRecipesDrinks } from '../ServicesRecipes/apiDrinks';
 import { apiRecipesFood } from '../ServicesRecipes/apiFood';
 import { RecipeContext } from '../context/recipes';
 import Card from '../components/Card';
-// import { useLocation } from 'react-router-dom';
 
 const MAX_RECIPES = 12;
 

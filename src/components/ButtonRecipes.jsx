@@ -16,8 +16,8 @@ function ButtonRecipes() {
   const renderizaApiSet = async () => { // renderizando as api's para serem usadas
     const mealsSetDados = await apiRecipesSetFood();
     const drinksSetDados = await apiRecipesSetDrinks();
-    setMealsSet([...new Set(mealsSetDados.meals.map((e) => e.strCategory))]);
-    setDrinkSet([...new Set(drinksSetDados.drinks.map((e) => e.strCategory))]);
+    setMealsSet([...new Set(mealsSetDados.meals?.map((e) => e.strCategory))]);
+    setDrinkSet([...new Set(drinksSetDados.drinks?.map((e) => e.strCategory))]);
     // consulta do set no site https://vidafullstack.com.br/javascript/new-set-com-javascript/
     // console.log(([...new Set(mealsDados.meals.map((e) => e.strCategory))]));
   };
@@ -62,7 +62,7 @@ function ButtonRecipes() {
   return (
     <div>
       { pathname === '/meals'
-        ? (mealsSet.slice(0, numberCategory).map((e) => (
+        ? (mealsSet?.slice(0, numberCategory).map((e) => (
           <button
             key={ e }
             data-testid={ `${e}-category-filter` }
@@ -70,7 +70,7 @@ function ButtonRecipes() {
           >
             { e }
           </button>
-        ))) : (drinkSet.slice(0, numberCategory).map((e) => (
+        ))) : (drinkSet?.slice(0, numberCategory).map((e) => (
           <button
             key={ e }
             data-testid={ `${e}-category-filter` }
