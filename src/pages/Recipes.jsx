@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ButtonRecipes from '../components/ButtonRecipes';
-import SearchBar from '../components/SearchBar';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { apiRecipesDrinks } from '../ServicesRecipes/apiDrinks';
@@ -31,7 +30,6 @@ function Recipes() {
   return (
     <div>
       <Header />
-      <SearchBar />
       <ButtonRecipes />
       <ul>
         {pathname === '/meals'
