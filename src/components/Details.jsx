@@ -1,17 +1,53 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-function Details() {
+function Details({
+  str,
+  strThumb,
+  strCategory,
+  strInstructions,
+  youtubeId,
+  ingredients,
+}) {
   return (
     <section>
-      <h1 data-testid="recipe-title">{ 'ha ' }</h1>
-      <img data-testid="recipe-photo" src="" alt="" />
-      <p data-testid="recipe-category" />
+      <h1 data-testid="recipe-title">{ str }</h1>
+      <img data-testid="recipe-photo" src={ strThumb } alt="recipe" />
+      <h3 data-testid="recipe-category">{ strCategory }</h3>
+      <ul>
+        {ingredients.map((ingredient, index) => (
+          <li key={ index }>
+            <span
+              data-testid={ `${index}-ingredient-name-and-measure` }
+            >
+              { ingredient }
+            </span>
+          </li>
+        ))}
+      </ul>
+      <p data-testid="instructions">{ strInstructions }</p>
+      {youtubeId && <iframe
+        data-testid="video"
+        width="853"
+        height="480"
+        src={ `https://www.youtube.com/embed/${youtubeId}` }
+        allow="accelerometer; autoplay; clipboard-write;
+        encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        title="Embedded youtube"
+      />}
 
     </section>
   );
 }
 
-Details.propTypes = {};
+Details.propTypes = {
+  str: PropTypes.string.isRequired,
+  strThumb: PropTypes.string.isRequired,
+  strCategory: PropTypes.string.isRequired,
+  strInstructions: PropTypes.string.isRequired,
+  youtubeId: PropTypes.string.isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default Details;
