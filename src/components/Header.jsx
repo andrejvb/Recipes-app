@@ -5,7 +5,7 @@ import searchIcon from '../images/searchIcon.svg';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import SearchBar from './SearchBar';
-import '../style/Header.css';
+// import '../style/Header.css';
 
 function Header() {
   const [startSearch, setStartSearch] = useState(false);
