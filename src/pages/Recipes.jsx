@@ -19,8 +19,8 @@ function Recipes() {
   const renderizaApi = useCallback(async () => { // renderizando as api's para serem usada
     const mealsDados = await apiRecipesFood();
     const drinksDados = await apiRecipesDrinks();
-    if (pathname === '/meals') setRecipes(mealsDados.meals.slice(0, MAX_RECIPES));
-    else setRecipes(drinksDados.drinks.slice(0, MAX_RECIPES));
+    if (pathname === '/meals') setRecipes(mealsDados.meals);
+    else setRecipes(drinksDados.drinks);
   }, [pathname, setRecipes]);
 
   useEffect(() => { // chamando a função  das api's
@@ -34,16 +34,18 @@ function Recipes() {
       <ButtonRecipes />
       <ul>
         {pathname === '/meals'
-          ? recipes.map(({ idMeal, strMeal, strMealThumb }, idx) => (
-            <li key={ idMeal }>
-              <Card index={ idx } title={ strMeal } thumb={ strMealThumb } />
-            </li>
-          ))
-          : recipes.map(({ strDrink, strDrinkThumb, idDrink }, idx) => (
-            <li key={ idDrink }>
-              <Card index={ idx } title={ strDrink } thumb={ strDrinkThumb } />
-            </li>
-          ))}
+          ? recipes.slice(0, MAX_RECIPES)
+            .map(({ idMeal, strMeal, strMealThumb }, idx) => (
+              <li key={ idMeal }>
+                <Card index={ idx } title={ strMeal } thumb={ strMealThumb } />
+              </li>
+            ))
+          : recipes.slice(0, MAX_RECIPES)
+            .map(({ strDrink, strDrinkThumb, idDrink }, idx) => (
+              <li key={ idDrink }>
+                <Card index={ idx } title={ strDrink } thumb={ strDrinkThumb } />
+              </li>
+            ))}
       </ul>
       <Footer />
     </div>
