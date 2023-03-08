@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import shareIcon from '../images/shareIcon.svg';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
+import DrinkInProgressCard from '../components/DrinkInProgressCard';
+import MealInProgressCard from '../components/MealInProgressCard';
 
 // import PropTypes from 'prop-types';
 
@@ -28,66 +28,15 @@ export default function RecipeInProgress() {
   }, [pathname, id]);
 
   if (typeOfRecipe === 'meals') {
-    return (
-      <div>
-        <img
-          data-testid="recipe-photo"
-          src={ fetchReturn.strMealThumb }
-          alt={ `Imagem do prato ${fetchReturn.strMeal}` }
-        />
-        <h3 data-testid="recipe-title">{fetchReturn.strMeal}</h3>
-        <button
-          data-testid="share-btn"
-        >
-          <img src={ shareIcon } alt="Botão de compartilhar" />
-        </button>
-
-        <button
-          data-testid="favorite-btn"
-        >
-          <img src={ blackHeartIcon } alt="Botão de favoritar" />
-        </button>
-        <p data-testid="recipe-category">{fetchReturn.strCategory}</p>
-
-        <p data-testid="instructions">
-          {fetchReturn.strInstructions}
-        </p>
-
-        <button data-testid="finish-recipe-btn">Finalizar</button>
-      </div>
-    );
+    return (<MealInProgressCard
+      fetchReturn={ fetchReturn }
+      typeOfRecipe={ typeOfRecipe }
+    />);
   }
   if (typeOfRecipe === 'drinks') {
-    return (
-      <div>
-        <img
-          data-testid="recipe-photo"
-          src={ fetchReturn.strDrinkThumb }
-          alt={ `Imagem da bebida ${fetchReturn.strDrink}` }
-        />
-        <h3 data-testid="recipe-title">{fetchReturn.strDrink}</h3>
-        <button
-          data-testid="share-btn"
-        >
-          <img src={ shareIcon } alt="Botão de compartilhar" />
-        </button>
-
-        <button
-          data-testid="favorite-btn"
-        >
-          <img src={ blackHeartIcon } alt="Botão de favoritar" />
-        </button>
-        <p data-testid="recipe-category">
-          {fetchReturn.strCategory === 'Non alcoholic' ? <span>Drink não Alcóolico</span>
-            : <span>Drink Alcóolico</span>}
-
-        </p>
-        <p data-testid="instructions">
-          {fetchReturn.strInstructions}
-        </p>
-
-        <button data-testid="finish-recipe-btn">Finalizar</button>
-      </div>
-    );
+    return (<DrinkInProgressCard
+      fetchReturn={ fetchReturn }
+      typeOfRecipe={ typeOfRecipe }
+    />);
   }
 }
