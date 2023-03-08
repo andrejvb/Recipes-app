@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 // import { Button } from 'bootstrap';
 import { Link } from 'react-router-dom';
@@ -6,10 +6,15 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Profile() {
+  const [email, setEmail] = useState();
+  useEffect(() => {
+    const emailLocalStorage = JSON.parse(localStorage.getItem('user'));
+    setEmail(emailLocalStorage.email);
+  }, [email]);
   return (
     <>
       <Header />
-      <div>Profile</div>
+      <h2 data-testid="profile-email">{email}</h2>
       <Link
         to="/done-recipes"
       >
