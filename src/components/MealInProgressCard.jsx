@@ -6,6 +6,7 @@ import '../style/checkboxStyle.css';
 
 export default function MealInProgressCard({ fetchReturn/* , typeOfRecipe */ }) {
   const [checkIgredient, setCheckIgredient] = useState({});
+  const [isDisabled, setIsDisabled] = useState(true);
   const ingredients = Object.entries(fetchReturn)
     .filter((ing) => ing[0].includes('Ingredient'))
     .filter((ing) => ing[1] !== '' && ing[1] !== null);
@@ -18,6 +19,14 @@ export default function MealInProgressCard({ fetchReturn/* , typeOfRecipe */ }) 
       obj[i] = false;
     } setCheckIgredient(obj);
   }, [ingredients.length]);
+
+  useEffect(() => {
+    const doneIngredients = Object.values(checkIgredient)
+      .filter((el) => el === true).length;
+    if (doneIngredients === ingredients.length) {
+      setIsDisabled(false);
+    } else setIsDisabled(true);
+  }, [checkIgredient, ingredients.length]);
 
   function handleToggle(index) {
     return setCheckIgredient({ ...checkIgredient, [index]: !checkIgredient[index] });
@@ -72,7 +81,7 @@ export default function MealInProgressCard({ fetchReturn/* , typeOfRecipe */ }) 
         {fetchReturn.strInstructions}
       </p>
 
-      <button data-testid="finish-recipe-btn">Finalizar</button>
+      <button disabled={ isDisabled } data-testid="finish-recipe-btn">Finalizar</button>
     </div>
   );
 }
