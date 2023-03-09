@@ -73,7 +73,7 @@ function extractRecipe(recipe, exclusiveKeys, rawRecomendations, recomendationKe
 
 function RecipeDetails() {
   const { idMeal, idDrink } = useParams();
-  const [recipe, setRecipe] = useState({});
+  const [recipe, setRecipe] = useState(null);
 
   const fetchCallback = useCallback(async () => {
     let maped;
@@ -109,7 +109,7 @@ function RecipeDetails() {
   }, [fetchCallback]);
 
   return (
-    'str' in recipe && <Details { ...recipe } />
+    recipe && <Details { ...recipe } />
   );
 }
 
