@@ -17,7 +17,6 @@ function Details({
 }) {
   const { pathname } = useLocation();
   const { idMeal, idDrink } = useParams();
-  // const doneRecipes = [{ id: '52771' }, { id: '178319' }];
   const inProgressSave = localStorage.getItem('inProgressRecipes');
   const inProgressRecipes = inProgressSave ? JSON.parse(inProgressSave) : {
     drinks: {},
