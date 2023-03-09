@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 // import { Button } from 'bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 function Profile() {
-  const [email, setEmail] = useState();
+  const [emailUser, setEmailUser] = useState('');
   useEffect(() => {
-    const emailLocalStorage = JSON.parse(localStorage.getItem('user'));
-    setEmail(emailLocalStorage.email);
-  }, [email]);
+    const { email } = JSON.parse(localStorage.getItem('user')) || 'user';
+    setEmailUser(email);
+  }, [emailUser]);
+
+  const history = useHistory();
+
   return (
     <>
       <Header />
-      <h2 data-testid="profile-email">{email}</h2>
+      <h2 data-testid="profile-email">{emailUser}</h2>
       <Link
         to="/done-recipes"
       >
@@ -38,6 +41,10 @@ function Profile() {
       <button
         type="button"
         data-testid="profile-logout-btn"
+        onClick={ () => {
+          localStorage.clear();
+          history.push('/');
+        } }
       >
         Logout
       </button>

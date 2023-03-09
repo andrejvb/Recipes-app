@@ -26,7 +26,7 @@ function Header() {
       break;
     case '/profile':
       title = 'Profile';
-      icon = null;
+      icon = profileIcon;
       search = true;
       break;
     case '/done-recipes':
@@ -67,8 +67,8 @@ function Header() {
           </button>
         )}
         <section className="meals">
-          <h2 data-testid="page-title">{ title }</h2>
           <img src={ icon } alt="Icon" />
+          <h2 data-testid="page-title">{ title }</h2>
         </section>
         { startSearch === true ? <SearchBar /> : null}
       </section>
