@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
 // import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
@@ -28,7 +30,8 @@ const MOCK_DATA_FAVORITE = [
 
 function FavoriteRecipes() {
   const [recipesFav, setRecipesFav] = useState([]);
-  console.log(recipesFav);
+  const [copie, setCopie] = useState(false);
+  // console.log(recipesFav);
 
   useEffect(() => {
     const data = localStorage.getItem('favoriteRecipes');
@@ -39,6 +42,13 @@ function FavoriteRecipes() {
     const parseData = JSON.parse(data);
     setRecipesFav(parseData);
   }, []);
+
+  const linkCopie = (type, id) => {
+    const acessoUrl = `http://localhost:3000/${type}s/${id}`;
+    console.log(acessoUrl);
+    copy(acessoUrl);
+    setCopie(true);
+  };
 
   return (
     <>
@@ -64,28 +74,38 @@ function FavoriteRecipes() {
         <div
           key={ e.id }
         >
-          <img
-            data-testid={ `${index}-horizontal-image` }
-            src={ e.image }
-            alt="teste"
-            width="150px"
-          />
+          <Link
+            to={ `/${e.type}s/${e.id}` }
+          >
+            <img
+              data-testid={ `${index}-horizontal-image` }
+              src={ e.image }
+              alt="teste"
+              width="150px"
+            />
+          </Link>
           <p
             data-testid={ `${index}-horizontal-top-text` }
           >
             { `${e.nationality} - ${e.category} - ${e.alcoholicOrNot}` }
           </p>
-          <p
-            data-testid={ `${index}-horizontal-name` }
+          <Link
+            to={ `/${e.type}s/${e.id}` }
           >
-            { e.name }
-          </p>
+            <p
+              data-testid={ `${index}-horizontal-name` }
+            >
+              { e.name }
+            </p>
+          </Link>
           <input
             type="image"
             data-testid={ `${index}-horizontal-share-btn` }
             src={ shareIcon }
             alt="Share Icon"
+            onClick={ () => linkCopie(e.type, e.id) }
           />
+          { copie && <p>Link copied!</p> }
           <input
             type="image"
             data-testid={ `${index}-horizontal-favorite-btn` }
