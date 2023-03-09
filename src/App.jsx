@@ -9,8 +9,8 @@ import DoneRecipes from './pages/DoneRecipes';
 import RecipeInProgress from './pages/RecipeInProgress';
 import Profile from './pages/Profile';
 import { RecipeProvider } from './context/recipes';
+import 'bootstrap/dist/css/bootstrap.min.css';
 // import rockGlass from './images/rockGlass.svg';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
