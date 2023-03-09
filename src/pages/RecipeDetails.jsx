@@ -1,9 +1,16 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Details from '../components/Details';
-import { fetchDrinkByLookup, fetchMealByLookup } from '../services/fetchAPI';
+import {
+  fetchDrinkByLookup,
+  fetchDrinksBySearch,
+  fetchMealByLookup,
+  fetchMealsBySearch,
+} from '../services/fetchAPI';
 
+const MAX_RECOMENDATIONS = 6;
 const MAX_INGREDIENTS = 20;
+const MAX_VISIBLE_RECOMENDATIONS = 2;
 const EXCLUSIVE_MEAL_KEYS = new Map([
   ['strThumb', 'strMealThumb'],
   ['str', 'strMeal'],
@@ -16,7 +23,7 @@ const EXCLUSIVE_DRINK_KEYS = new Map([
   ['strCategory', 'strAlcoholic'],
 ]);
 
-function extractRecipe(recipe, exclusiveKeys) {
+function extractRecipe(recipe, exclusiveKeys, rawRecomendations, recomendationKeys) {
   const { strCategory, strInstructions } = recipe;
   const recipeExclusives = {};
   exclusiveKeys.forEach((value, key) => { recipeExclusives[key] = recipe[value]; });
@@ -37,12 +44,30 @@ function extractRecipe(recipe, exclusiveKeys) {
     } else if (recipe[ingredientIndex]) ingredients.push(recipe[ingredientIndex]);
     else break;
   }
+  const recomendations = [];
+  const mapedRecomendations = rawRecomendations.slice(0, MAX_RECOMENDATIONS)
+    .map(({
+      [recomendationKeys.get('str')]: title,
+      [recomendationKeys.get('strThumb')]: image,
+    }, index) => ({ title, image, index }));
+
+  for (let i = 0; i < MAX_RECOMENDATIONS; i += MAX_VISIBLE_RECOMENDATIONS) {
+    recomendations.push({
+      title1: mapedRecomendations[i].title,
+      title2: mapedRecomendations[i + 1].title,
+      image1: mapedRecomendations[i].image,
+      image2: mapedRecomendations[i + 1].image,
+      index1: mapedRecomendations[i].index,
+      index2: mapedRecomendations[i + 1].index,
+    });
+  }
   return ({
     strCategory,
     ...recipeExclusives,
     youtubeId,
     strInstructions,
     ingredients,
+    recomendations,
   });
 }
 
@@ -53,9 +78,28 @@ function RecipeDetails() {
   const fetchCallback = useCallback(async () => {
     let maped;
     if (idMeal !== undefined) {
-      maped = extractRecipe(await fetchMealByLookup(idMeal), EXCLUSIVE_MEAL_KEYS);
+      const [meal, recomendations] = await Promise.all([
+        fetchMealByLookup(idMeal),
+        fetchDrinksBySearch('s=', ''),
+      ]);
+      console.log(recomendations);
+      maped = extractRecipe(
+        meal,
+        EXCLUSIVE_MEAL_KEYS,
+        recomendations,
+        EXCLUSIVE_DRINK_KEYS,
+      );
     } else {
-      maped = extractRecipe(await fetchDrinkByLookup(idDrink), EXCLUSIVE_DRINK_KEYS);
+      const [drink, recomendations] = await Promise.all([
+        fetchDrinkByLookup(idDrink),
+        fetchMealsBySearch('s=', ''),
+      ]);
+      maped = extractRecipe(
+        drink,
+        EXCLUSIVE_DRINK_KEYS,
+        recomendations,
+        EXCLUSIVE_MEAL_KEYS,
+      );
     }
     setRecipe(maped);
   }, [idMeal, idDrink]);

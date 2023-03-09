@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Recomendation from './Recomendation';
 
 function Details({
   str,
@@ -8,6 +9,7 @@ function Details({
   strInstructions,
   youtubeId,
   ingredients,
+  recomendations,
 }) {
   return (
     <section>
@@ -36,7 +38,7 @@ function Details({
         allowFullScreen
         title="Embedded youtube"
       />}
-
+      <Recomendation recomendations={ recomendations } />
     </section>
   );
 }
@@ -48,6 +50,14 @@ Details.propTypes = {
   strInstructions: PropTypes.string.isRequired,
   youtubeId: PropTypes.string.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  recomendations: PropTypes.arrayOf(PropTypes.shape({
+    title1: PropTypes.string.isRequired,
+    title2: PropTypes.string.isRequired,
+    image1: PropTypes.string.isRequired,
+    image2: PropTypes.string.isRequired,
+    index1: PropTypes.number.isRequired,
+    index2: PropTypes.number.isRequired,
+  })).isRequired,
 };
 
 export default Details;
