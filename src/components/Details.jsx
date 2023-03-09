@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Recomendation from './Recomendation';
 
 function Details({
+  id,
+  strArea,
+  strAlcoholic,
   str,
   strThumb,
   strCategory,
@@ -11,8 +14,33 @@ function Details({
   ingredients,
   recomendations,
 }) {
+  const [favorite, setFavorite] = useState([]);
+
+  useEffect(() => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favorite));
+  }, [favorite]);
   return (
     <section>
+      <button
+        type="button"
+        data-testid="favorite-btn"
+        value={ favorite }
+        onClick={ (() => {
+          setFavorite([{
+            id,
+            type: strAlcoholic === 'Alcoholic' ? 'drink' : 'meal',
+            name: str,
+            category: strCategory,
+            image: strThumb,
+            nationality: strArea === undefined ? '' : strArea,
+            alcoholicOrNot: strAlcoholic === undefined ? '' : strAlcoholic,
+          }]);
+        }) }
+      >
+
+        Favoritar
+      </button>
+      <button type="button" data-testid="share-btn">Compartilhar</button>
       <h1 data-testid="recipe-title">{ str }</h1>
       <img data-testid="recipe-photo" src={ strThumb } alt="recipe" />
       <h3 data-testid="recipe-category">{ strCategory }</h3>
@@ -44,6 +72,9 @@ function Details({
 }
 
 Details.propTypes = {
+  id: PropTypes.string.isRequired,
+  strArea: PropTypes.string.isRequired,
+  strAlcoholic: PropTypes.string.isRequired,
   str: PropTypes.string.isRequired,
   strThumb: PropTypes.string.isRequired,
   strCategory: PropTypes.string.isRequired,
