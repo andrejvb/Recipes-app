@@ -14,24 +14,25 @@ const MAX_VISIBLE_RECOMENDATIONS = 2;
 const EXCLUSIVE_MEAL_KEYS = new Map([
   ['strThumb', 'strMealThumb'],
   ['str', 'strMeal'],
-  ['video', 'strYoutube'],
+  ['video', 'strYoutube', 'strArea', 'strCategory'],
 ]);
 const EXCLUSIVE_DRINK_KEYS = new Map([
   ['strThumb', 'strDrinkThumb'],
   ['str', 'strDrink'],
   ['video', 'strVideo'],
-  ['strCategory', 'strAlcoholic'],
+  ['Alcoholic', 'strAlcoholic'],
+  ['nacionality', 'strArea'],
 ]);
 
 function extractRecipe(recipe, exclusiveKeys, rawRecomendations, recomendationKeys) {
-  const { strCategory, strInstructions } = recipe;
+  const { strCategory, strInstructions, strArea, strAlcoholic } = recipe;
   const recipeExclusives = {};
   exclusiveKeys.forEach((value, key) => { recipeExclusives[key] = recipe[value]; });
   const regexToCaptureYTId = /^https:\/\/www.youtube.com\/watch\?v=(.+)$/;
   const matches = recipeExclusives.video?.match(regexToCaptureYTId);
   let youtubeId = '';
   if (matches) {
-    const [, fuckyoulint] = matches;
+    const [fuckyoulint] = matches;
     youtubeId = fuckyoulint;
   }
   delete recipeExclusives.video;
@@ -62,7 +63,9 @@ function extractRecipe(recipe, exclusiveKeys, rawRecomendations, recomendationKe
     });
   }
   return ({
+    strArea,
     strCategory,
+    strAlcoholic,
     ...recipeExclusives,
     youtubeId,
     strInstructions,
@@ -82,7 +85,6 @@ function RecipeDetails() {
         fetchMealByLookup(idMeal),
         fetchDrinksBySearch('s=', ''),
       ]);
-      console.log(recomendations);
       maped = extractRecipe(
         meal,
         EXCLUSIVE_MEAL_KEYS,
@@ -94,6 +96,7 @@ function RecipeDetails() {
         fetchDrinkByLookup(idDrink),
         fetchMealsBySearch('s=', ''),
       ]);
+      console.log(drink);
       maped = extractRecipe(
         drink,
         EXCLUSIVE_DRINK_KEYS,
@@ -109,7 +112,7 @@ function RecipeDetails() {
   }, [fetchCallback]);
 
   return (
-    'str' in recipe && <Details { ...recipe } />
+    'str' in recipe && <Details { ...recipe } id={ idDrink || idMeal } />
   );
 }
 
