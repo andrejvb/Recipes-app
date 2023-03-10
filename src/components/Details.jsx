@@ -32,8 +32,8 @@ function Details({
             name: str,
             category: strCategory,
             image: strThumb,
-            nationality: strArea === undefined ? '' : strArea,
-            alcoholicOrNot: strAlcoholic === undefined ? '' : strAlcoholic,
+            nationality: strArea || '',
+            alcoholicOrNot: strAlcoholic || '',
           }]);
         }) }
       >
@@ -43,7 +43,7 @@ function Details({
       <button type="button" data-testid="share-btn">Compartilhar</button>
       <h1 data-testid="recipe-title">{ str }</h1>
       <img data-testid="recipe-photo" src={ strThumb } alt="recipe" />
-      <h3 data-testid="recipe-category">{ strCategory }</h3>
+      <h3 data-testid="recipe-category">{ strAlcoholic || strCategory }</h3>
       <ul>
         {ingredients.map((ingredient, index) => (
           <li key={ index }>
