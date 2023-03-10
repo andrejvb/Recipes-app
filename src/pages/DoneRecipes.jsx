@@ -1,3 +1,4 @@
+import copy from 'clipboard-copy';
 import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
@@ -29,6 +30,14 @@ const MOCK_DATA = [
 
 function DoneRecipes() {
   const [recipes, setRecipes] = useState([]);
+  // const [showMessage, setShowMessage] = useState(false);
+  const [copie, setCopie] = useState(false);
+
+  const copyClick = (type, id) => {
+    const URL = `http://localhost:3000/${type}s/${id}`;
+    copy(URL);
+    setCopie(true);
+  };
 
   console.log(recipes);
   useEffect(() => {
@@ -82,8 +91,12 @@ function DoneRecipes() {
           />
 
           <h3 data-testid={ `${index}-horizontal-top-text` }>
-            { `${recipe.nationality} -
-            ${recipe.category}`}
+            { recipe.type === 'meal'
+              ? `${recipe.nationality} - ${recipe.category}`
+              : recipe.alcoholicOrNot }
+            {/* { `${recipe.nationality} -
+            ${recipe.category}`} */}
+
           </h3>
           <h3 data-testid={ `${index}-horizontal-name` }>
             {' '}
@@ -94,8 +107,12 @@ function DoneRecipes() {
             {recipe.doneDate}
           </h3>
 
-          <button>
-            Compartilhar
+          {/* {showMessage && <p>Link copied!</p>} */}
+          <button
+            type="button"
+            onClick={ () => copyClick(recipe.type, recipe.id) }
+          >
+            {copie && <p>Link copied!</p>}
             <img
               data-testid={ `${index}-horizontal-share-btn` }
               src={ shareIcon }
