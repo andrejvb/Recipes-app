@@ -2,6 +2,7 @@ import copy from 'clipboard-copy';
 import React, { useEffect, useState } from 'react';
 // import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
+import Header from '../components/Header';
 
 const MOCK_DATA = [
   {
@@ -54,6 +55,7 @@ function DoneRecipes() {
   return (
 
     <div>
+      <Header />
       DoneRecipes
 
       <button
