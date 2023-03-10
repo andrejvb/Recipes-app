@@ -14,25 +14,24 @@ const MAX_VISIBLE_RECOMENDATIONS = 2;
 const EXCLUSIVE_MEAL_KEYS = new Map([
   ['strThumb', 'strMealThumb'],
   ['str', 'strMeal'],
-  ['video', 'strYoutube', 'strArea', 'strCategory'],
+  ['video', 'strYoutube'],
 ]);
 const EXCLUSIVE_DRINK_KEYS = new Map([
   ['strThumb', 'strDrinkThumb'],
   ['str', 'strDrink'],
   ['video', 'strVideo'],
-  ['Alcoholic', 'strAlcoholic'],
-  ['nacionality', 'strArea'],
+  ['strCategory', 'strAlcoholic'],
 ]);
 
 function extractRecipe(recipe, exclusiveKeys, rawRecomendations, recomendationKeys) {
-  const { strCategory, strInstructions, strArea, strAlcoholic } = recipe;
+  const { strCategory, strInstructions } = recipe;
   const recipeExclusives = {};
   exclusiveKeys.forEach((value, key) => { recipeExclusives[key] = recipe[value]; });
   const regexToCaptureYTId = /^https:\/\/www.youtube.com\/watch\?v=(.+)$/;
   const matches = recipeExclusives.video?.match(regexToCaptureYTId);
   let youtubeId = '';
   if (matches) {
-    const [fuckyoulint] = matches;
+    const [, fuckyoulint] = matches;
     youtubeId = fuckyoulint;
   }
   delete recipeExclusives.video;
@@ -63,9 +62,7 @@ function extractRecipe(recipe, exclusiveKeys, rawRecomendations, recomendationKe
     });
   }
   return ({
-    strArea,
     strCategory,
-    strAlcoholic,
     ...recipeExclusives,
     youtubeId,
     strInstructions,
@@ -76,7 +73,7 @@ function extractRecipe(recipe, exclusiveKeys, rawRecomendations, recomendationKe
 
 function RecipeDetails() {
   const { idMeal, idDrink } = useParams();
-  const [recipe, setRecipe] = useState({});
+  const [recipe, setRecipe] = useState(null);
 
   const fetchCallback = useCallback(async () => {
     let maped;
@@ -85,6 +82,7 @@ function RecipeDetails() {
         fetchMealByLookup(idMeal),
         fetchDrinksBySearch('s=', ''),
       ]);
+      console.log(recomendations);
       maped = extractRecipe(
         meal,
         EXCLUSIVE_MEAL_KEYS,
@@ -96,7 +94,6 @@ function RecipeDetails() {
         fetchDrinkByLookup(idDrink),
         fetchMealsBySearch('s=', ''),
       ]);
-      console.log(drink);
       maped = extractRecipe(
         drink,
         EXCLUSIVE_DRINK_KEYS,
@@ -112,7 +109,7 @@ function RecipeDetails() {
   }, [fetchCallback]);
 
   return (
-    'str' in recipe && <Details { ...recipe } id={ idDrink || idMeal } />
+    recipe && <Details { ...recipe } />
   );
 }
 
