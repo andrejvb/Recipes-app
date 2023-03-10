@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useLocation, useParams, Link } from 'react-router-dom';
 import Recomendation from './Recomendation';
+
+const START_RECIPE = 'Start Recipe';
+const PROGRESS_RECIPE = 'Continue Recipe';
 
 function Details({
   str,
@@ -11,6 +15,22 @@ function Details({
   ingredients,
   recomendations,
 }) {
+  const { pathname } = useLocation();
+  const { idMeal, idDrink } = useParams();
+  const inProgressSave = localStorage.getItem('inProgressRecipes');
+  const inProgressRecipes = inProgressSave ? JSON.parse(inProgressSave) : {
+    drinks: {},
+    meals: {},
+  };
+  let drinks = {};
+  let meals = {};
+  if ('drinks' in inProgressRecipes) drinks = inProgressRecipes.drinks;
+  if ('meals' in inProgressRecipes) meals = inProgressRecipes.meals;
+  const jointRecipes = [...Object.keys(drinks), ...Object.keys(meals)];
+  const isInProgress = jointRecipes.some((id) => id === idMeal || id === idDrink);
+  const donesSaved = localStorage.getItem('doneRecipes');
+  const doneRecipes = donesSaved ? JSON.parse(donesSaved) : [];
+  const isDone = doneRecipes.some(({ id }) => id === idMeal || id === idDrink);
   return (
     <section>
       <h1 data-testid="recipe-title">{ str }</h1>
@@ -39,6 +59,15 @@ function Details({
         title="Embedded youtube"
       />}
       <Recomendation recomendations={ recomendations } />
+      {isDone || (
+        <Link
+          className="fixed-bottom"
+          data-testid="start-recipe-btn"
+          to={ `${pathname}/in-progress` }
+        >
+          { isInProgress ? PROGRESS_RECIPE : START_RECIPE }
+        </Link>
+      )}
     </section>
   );
 }
