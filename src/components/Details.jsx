@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import copy from 'clipboard-copy';
+import Toast from 'react-bootstrap/Toast';
+import ToastContainer from 'react-bootstrap/ToastContainer';
 import PropTypes from 'prop-types';
 import { useLocation, useParams, Link } from 'react-router-dom';
 import Recomendation from './Recomendation';
@@ -19,6 +22,7 @@ function Details({
   recomendations,
 }) {
   const [favorite, setFavorite] = useState([]);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('favoriteRecipes', JSON.stringify(favorite));
@@ -42,6 +46,22 @@ function Details({
   const isDone = doneRecipes.some(({ id: eid }) => eid === idMeal || eid === idDrink);
   return (
     <section>
+      <ToastContainer position="bottom-center">
+        <Toast
+          className="mb-4"
+          onClose={ () => setShow(false) }
+          show={ show }
+          delay={ 3000 }
+          autohide
+          bg="success"
+        >
+          <Toast.Body
+            className="text-white"
+          >
+            Link copied!
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
       <button
         type="button"
         data-testid="favorite-btn"
@@ -60,7 +80,16 @@ function Details({
       >
         Favoritar
       </button>
-      <button type="button" data-testid="share-btn">Compartilhar</button>
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ () => {
+          copy(`http://localhost:3000${pathname}`);
+          setShow(true);
+        } }
+      >
+        Compartilhar
+      </button>
       <h1 data-testid="recipe-title">{ str }</h1>
       <img data-testid="recipe-photo" src={ strThumb } alt="recipe" />
       <h3 data-testid="recipe-category">{ strAlcoholic || strCategory }</h3>
