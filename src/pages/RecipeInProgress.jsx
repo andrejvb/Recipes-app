@@ -16,24 +16,24 @@ export default function RecipeInProgress() {
       if (pathname.includes('meals')) {
         const data = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
         const response = await data.json();
-        setTypeOfRecipe('meals');
+        setTypeOfRecipe('meal');
         setFetchReturn(response.meals[0]);
       } else {
         const data = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
         const response = await data.json();
-        setTypeOfRecipe('drinks');
+        setTypeOfRecipe('drink');
         setFetchReturn(response.drinks[0]);
       }
     } searchApi();
   }, [pathname, id]);
 
-  if (typeOfRecipe === 'meals') {
+  if (typeOfRecipe === 'meal') {
     return (<MealInProgressCard
       fetchReturn={ fetchReturn }
       typeOfRecipe={ typeOfRecipe }
     />);
   }
-  if (typeOfRecipe === 'drinks') {
+  if (typeOfRecipe === 'drink') {
     return (<DrinkInProgressCard
       fetchReturn={ fetchReturn }
       typeOfRecipe={ typeOfRecipe }
