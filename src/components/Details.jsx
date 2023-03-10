@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation, useParams, Link } from 'react-router-dom';
 import Recomendation from './Recomendation';
@@ -7,6 +7,9 @@ const START_RECIPE = 'Start Recipe';
 const PROGRESS_RECIPE = 'Continue Recipe';
 
 function Details({
+  id,
+  strArea,
+  strAlcoholic,
   str,
   strThumb,
   strCategory,
@@ -15,6 +18,12 @@ function Details({
   ingredients,
   recomendations,
 }) {
+  const [favorite, setFavorite] = useState([]);
+
+  useEffect(() => {
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favorite));
+  }, [favorite]);
+
   const { pathname } = useLocation();
   const { idMeal, idDrink } = useParams();
   const inProgressSave = localStorage.getItem('inProgressRecipes');
@@ -27,10 +36,10 @@ function Details({
   if ('drinks' in inProgressRecipes) drinks = inProgressRecipes.drinks;
   if ('meals' in inProgressRecipes) meals = inProgressRecipes.meals;
   const jointRecipes = [...Object.keys(drinks), ...Object.keys(meals)];
-  const isInProgress = jointRecipes.some((id) => id === idMeal || id === idDrink);
+  const isInProgress = jointRecipes.some((eid) => eid === idMeal || eid === idDrink);
   const donesSaved = localStorage.getItem('doneRecipes');
   const doneRecipes = donesSaved ? JSON.parse(donesSaved) : [];
-  const isDone = doneRecipes.some(({ id }) => id === idMeal || id === idDrink);
+  const isDone = doneRecipes.some(({ id: eid }) => eid === idMeal || eid === idDrink);
   return (
     <section>
       <button
@@ -92,6 +101,9 @@ function Details({
 }
 
 Details.propTypes = {
+  id: PropTypes.string.isRequired,
+  strArea: PropTypes.string.isRequired,
+  strAlcoholic: PropTypes.string.isRequired,
   str: PropTypes.string.isRequired,
   strThumb: PropTypes.string.isRequired,
   strCategory: PropTypes.string.isRequired,

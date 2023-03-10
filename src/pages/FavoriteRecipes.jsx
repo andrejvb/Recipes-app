@@ -7,26 +7,26 @@ import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
-const MOCK_DATA_FAVORITE = [
-  {
-    id: '52771',
-    type: 'meal',
-    nationality: 'Italian',
-    category: 'Vegetarian',
-    alcoholicOrNot: '',
-    name: 'Spicy Arrabiata Penne',
-    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-  },
-  {
-    id: '178319',
-    type: 'drink',
-    nationality: '',
-    category: 'Cocktail',
-    alcoholicOrNot: 'Alcoholic',
-    name: 'Aquamarine',
-    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-  },
-];
+// const MOCK_DATA_FAVORITE = [
+//   {
+//     id: '52771',
+//     type: 'meal',
+//     nationality: 'Italian',
+//     category: 'Vegetarian',
+//     alcoholicOrNot: '',
+//     name: 'Spicy Arrabiata Penne',
+//     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+//   },
+//   {
+//     id: '178319',
+//     type: 'drink',
+//     nationality: '',
+//     category: 'Cocktail',
+//     alcoholicOrNot: 'Alcoholic',
+//     name: 'Aquamarine',
+//     image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+//   },
+// ];
 
 function FavoriteRecipes() {
   const [recipesFav, setRecipesFav] = useState([]);
@@ -37,11 +37,11 @@ function FavoriteRecipes() {
 
   useEffect(() => { // requisito 50 buscando e pegando as coisa do localStorage e simulando caso não tenha nada ainda
     const data = localStorage.getItem('favoriteRecipes');
-    if (!data) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([]));
-    }
-    localStorage.setItem('favoriteRecipes', JSON.stringify(MOCK_DATA_FAVORITE));
-    const parseData = JSON.parse(data);
+    // if (!data) {
+    //   localStorage.setItem('favoriteRecipes', JSON.stringify([]));
+    // }
+    // localStorage.setItem('favoriteRecipes', JSON.stringify(MOCK_DATA_FAVORITE));
+    const parseData = JSON.parse(data) || [];
     setRecipesFav(parseData);
   }, []);
 
