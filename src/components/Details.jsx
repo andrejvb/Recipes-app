@@ -33,9 +33,28 @@ function Details({
   const isDone = doneRecipes.some(({ id }) => id === idMeal || id === idDrink);
   return (
     <section>
+      <button
+        type="button"
+        data-testid="favorite-btn"
+        value={ favorite }
+        onClick={ (() => {
+          setFavorite([{
+            id,
+            type: strAlcoholic === 'Alcoholic' ? 'drink' : 'meal',
+            name: str,
+            category: strCategory,
+            image: strThumb,
+            nationality: strArea || '',
+            alcoholicOrNot: strAlcoholic || '',
+          }]);
+        }) }
+      >
+        Favoritar
+      </button>
+      <button type="button" data-testid="share-btn">Compartilhar</button>
       <h1 data-testid="recipe-title">{ str }</h1>
       <img data-testid="recipe-photo" src={ strThumb } alt="recipe" />
-      <h3 data-testid="recipe-category">{ strCategory }</h3>
+      <h3 data-testid="recipe-category">{ strAlcoholic || strCategory }</h3>
       <ul>
         {ingredients.map((ingredient, index) => (
           <li key={ index }>
