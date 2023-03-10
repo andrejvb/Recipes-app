@@ -20,11 +20,12 @@ const EXCLUSIVE_DRINK_KEYS = new Map([
   ['strThumb', 'strDrinkThumb'],
   ['str', 'strDrink'],
   ['video', 'strVideo'],
-  ['strCategory', 'strAlcoholic'],
+  ['Alcoholic', 'strAlcoholic'],
+  ['nacionality', 'strArea'],
 ]);
 
 function extractRecipe(recipe, exclusiveKeys, rawRecomendations, recomendationKeys) {
-  const { strCategory, strInstructions } = recipe;
+  const { strCategory, strInstructions, strArea, strAlcoholic } = recipe;
   const recipeExclusives = {};
   exclusiveKeys.forEach((value, key) => { recipeExclusives[key] = recipe[value]; });
   const regexToCaptureYTId = /^https:\/\/www.youtube.com\/watch\?v=(.+)$/;
@@ -62,7 +63,9 @@ function extractRecipe(recipe, exclusiveKeys, rawRecomendations, recomendationKe
     });
   }
   return ({
+    strArea,
     strCategory,
+    strAlcoholic,
     ...recipeExclusives,
     youtubeId,
     strInstructions,
@@ -109,7 +112,7 @@ function RecipeDetails() {
   }, [fetchCallback]);
 
   return (
-    recipe && <Details { ...recipe } />
+    recipe && <Details { ...recipe } id={ idDrink || idMeal } />
   );
 }
 

@@ -4,30 +4,30 @@ import React, { useEffect, useState } from 'react';
 import shareIcon from '../images/shareIcon.svg';
 import Header from '../components/Header';
 
-const MOCK_DATA = [
-  {
-    id: '52771',
-    type: 'meal',
-    nationality: 'Italian',
-    category: 'Vegetarian',
-    alcoholicOrNot: '',
-    name: 'Spicy Arrabiata Penne',
-    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-    doneDate: '23/06/2020',
-    tags: ['Pasta', 'Curry'],
-  },
-  {
-    id: '178319',
-    type: 'drink',
-    nationality: '',
-    category: 'Cocktail',
-    alcoholicOrNot: 'Alcoholic',
-    name: 'Aquamarine',
-    image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-    doneDate: '23/06/2020',
-    tags: [],
-  },
-];
+// const MOCK_DATA = [
+//   {
+//     id: '52771',
+//     type: 'meal',
+//     nationality: 'Italian',
+//     category: 'Vegetarian',
+//     alcoholicOrNot: '',
+//     name: 'Spicy Arrabiata Penne',
+//     image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+//     doneDate: '23/06/2020',
+//     tags: ['Pasta', 'Curry'],
+//   },
+//   {
+//     id: '178319',
+//     type: 'drink',
+//     nationality: '',
+//     category: 'Cocktail',
+//     alcoholicOrNot: 'Alcoholic',
+//     name: 'Aquamarine',
+//     image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+//     doneDate: '23/06/2020',
+//     tags: [],
+//   },
+// ];
 
 function DoneRecipes() {
   const [recipes, setRecipes] = useState([]);
@@ -43,11 +43,11 @@ function DoneRecipes() {
   console.log(recipes);
   useEffect(() => {
     const data = localStorage.getItem('doneRecipes');
-    if (!data) {
-      localStorage.setItem('doneRecipes', JSON.stringify([]));
-    }
-    localStorage.setItem('doneRecipes', JSON.stringify(MOCK_DATA)); // depois retirar
-    const parsedData = JSON.parse(data);
+    // if (!data) {
+    //   localStorage.setItem('doneRecipes', JSON.stringify([]));
+    // }
+    // localStorage.setItem('doneRecipes', JSON.stringify(MOCK_DATA)); // depois retirar
+    const parsedData = JSON.parse(data) || [];
 
     setRecipes(parsedData);
   }, []);
@@ -56,7 +56,6 @@ function DoneRecipes() {
 
     <div>
       <Header />
-      DoneRecipes
 
       <button
         data-testid="filter-by-all-btn"
