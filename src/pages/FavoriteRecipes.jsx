@@ -30,10 +30,12 @@ const MOCK_DATA_FAVORITE = [
 
 function FavoriteRecipes() {
   const [recipesFav, setRecipesFav] = useState([]);
+  const [filters, setFilters] = useState([]);
+  console.log(filters);
   const [copie, setCopie] = useState(false);
   // console.log(recipesFav);
 
-  useEffect(() => {
+  useEffect(() => { // requisito 50 buscando e pegando as coisa do localStorage e simulando caso não tenha nada ainda
     const data = localStorage.getItem('favoriteRecipes');
     if (!data) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([]));
@@ -43,12 +45,30 @@ function FavoriteRecipes() {
     setRecipesFav(parseData);
   }, []);
 
-  const linkCopie = (type, id) => {
+  const linkCopie = (type, id) => { // requisito 53 para copiar o link url
     const acessoUrl = `http://localhost:3000/${type}s/${id}`;
     console.log(acessoUrl);
     copy(acessoUrl);
     setCopie(true);
   };
+
+  const mealsFilter = () => { // requisito 55 essa e as outras duas abaixo, descobrir em como unir em uma
+    const meals = recipesFav.filter((eMeals) => eMeals.type === 'meal');
+    setFilters(meals);
+  };
+
+  const drinkFilter = () => {
+    const drink = recipesFav.filter((eDrinks) => eDrinks.type === 'drink');
+    setFilters(drink);
+  };
+
+  const allFilter = () => {
+    setFilters(recipesFav);
+  };
+
+  useEffect(() => {
+    setFilters(recipesFav);
+  }, [recipesFav]);
 
   return (
     <>
@@ -57,20 +77,23 @@ function FavoriteRecipes() {
       <div>FavoriteRecipes</div>
       <button
         data-testid="filter-by-all-btn"
+        onClick={ () => allFilter() }
       >
         All
       </button>
       <button
         data-testid="filter-by-meal-btn"
+        onClick={ () => mealsFilter() }
       >
         Meals
       </button>
       <button
         data-testid="filter-by-drink-btn"
+        onClick={ () => drinkFilter() }
       >
         Drinks
       </button>
-      { recipesFav.map((e, index) => (
+      { filters.map((e, index) => (
         <div
           key={ e.id }
         >
@@ -87,7 +110,8 @@ function FavoriteRecipes() {
           <p
             data-testid={ `${index}-horizontal-top-text` }
           >
-            { `${e.nationality} - ${e.category} - ${e.alcoholicOrNot}` }
+            { e.type === 'meal'
+              ? `${e.nationality} - ${e.category}` : e.alcoholicOrNot }
           </p>
           <Link
             to={ `/${e.type}s/${e.id}` }

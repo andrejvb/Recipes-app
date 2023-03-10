@@ -4,7 +4,12 @@ function Card({ index, title, thumb }) {
   return (
     <figure data-testid={ `${index}-recipe-card` }>
       <figcaption data-testid={ `${index}-card-name` }>{ title }</figcaption>
-      <img data-testid={ `${index}-card-img` } src={ thumb } alt={ title } />
+      <img
+        data-testid={ `${index}-card-img` }
+        src={ thumb }
+        alt={ title }
+        width="150px"
+      />
     </figure>
   );
 }
