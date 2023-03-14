@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
 import { apiRecipesDrinks, apiRecipesSetDrinks } from '../ServicesRecipes/apiDrinks';
 import { apiRecipesFood, apiRecipesSetFood } from '../ServicesRecipes/apiFood';
 import { RecipeContext } from '../context/recipes';
+import './Login.css';
 
 function ButtonRecipes() {
   const { pathname } = useLocation(); // usado para acessar as telas /meals e /drinks
@@ -60,31 +62,37 @@ function ButtonRecipes() {
   };
 
   return (
-    <div>
+    <div className="buttons-header">
       { pathname === '/meals'
         ? (mealsSet?.slice(0, numberCategory).map((e) => (
-          <button
+          <Button
             key={ e }
             data-testid={ `${e}-category-filter` }
             onClick={ () => changeCategory(e) }
+            variant="secondary"
+            className="botoes-header"
           >
             { e }
-          </button>
+          </Button>
         ))) : (drinkSet?.slice(0, numberCategory).map((e) => (
-          <button
+          <Button
             key={ e }
             data-testid={ `${e}-category-filter` }
             onClick={ () => changeCategory(e) }
+            variant="secondary"
+            className="botoes-header"
           >
             { e }
-          </button>
+          </Button>
         ))) }
-      <button
+      <Button
         data-testid="All-category-filter"
         onClick={ () => handleClean() }
+        variant="secondary"
+        className="botoes-header"
       >
         All
-      </button>
+      </Button>
     </div>
   );
 }

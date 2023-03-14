@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import copy from 'clipboard-copy';
+import Button from 'react-bootstrap/Button';
 import Toast from 'react-bootstrap/Toast';
 import ToastContainer from 'react-bootstrap/ToastContainer';
 import PropTypes from 'prop-types';
 import { useLocation, useParams, Link } from 'react-router-dom';
 import Recomendation from './Recomendation';
+import './Login.css';
 
 const START_RECIPE = 'Start Recipe';
 const PROGRESS_RECIPE = 'Continue Recipe';
@@ -62,10 +64,12 @@ function Details({
           </Toast.Body>
         </Toast>
       </ToastContainer>
-      <button
+      <Button
         type="button"
         data-testid="favorite-btn"
         value={ favorite }
+        variant="secondary"
+        className="button-detalhes"
         onClick={ (() => {
           setFavorite([{
             id,
@@ -79,20 +83,35 @@ function Details({
         }) }
       >
         Favoritar
-      </button>
-      <button
+      </Button>
+      <Button
         type="button"
         data-testid="share-btn"
+        variant="secondary"
+        className="button-detalhes"
         onClick={ () => {
           copy(`http://localhost:3000${pathname}`);
           setShow(true);
         } }
       >
         Compartilhar
-      </button>
-      <h1 data-testid="recipe-title">{ str }</h1>
-      <img data-testid="recipe-photo" src={ strThumb } alt="recipe" />
-      <h3 data-testid="recipe-category">{ strAlcoholic || strCategory }</h3>
+      </Button>
+      <div className="div-detalhes">
+        <h1 data-testid="recipe-title" className="title-detalhes">{ str }</h1>
+        <img
+          data-testid="recipe-photo"
+          className="img-detalhes"
+          src={ strThumb }
+          alt="recipe"
+        />
+        <h3
+          data-testid="recipe-category"
+          className="category-detalhes"
+        >
+          { strAlcoholic || strCategory }
+        </h3>
+      </div>
+      <h3>Ingredientes</h3>
       <ul>
         {ingredients.map((ingredient, index) => (
           <li key={ index }>
@@ -104,6 +123,7 @@ function Details({
           </li>
         ))}
       </ul>
+      <h3>Modo de preparo</h3>
       <p data-testid="instructions">{ strInstructions }</p>
       {youtubeId && <iframe
         data-testid="video"

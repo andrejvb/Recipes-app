@@ -1,0 +1,11 @@
+.email-profile {
+   text-align: center;
+}
+
+.buttons-profile {
+  display: flex;
+  justify-content: center;
+  align-itens: center;
+  width: 100%;
+  gap: 5px;
+}

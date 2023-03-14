@@ -5,6 +5,7 @@ import searchIcon from '../images/searchIcon.svg';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 import SearchBar from './SearchBar';
+import './Login.css';
 // import '../style/Header.css';
 
 function Header() {
@@ -46,31 +47,36 @@ function Header() {
   return (
     <header>
       <section className="boxHeader">
-        <h1>RECIPES app</h1>
-        <Link to="/profile">
-          <img
-            data-testid="profile-top-btn"
-            src={ profileIcon }
-            alt="Profile Icon"
-          />
-        </Link>
-        {search || (
-          <button
-            // className="buttonSearch"
-            type="button"
-            data-testid="search-top-btn"
-            value={ startSearch }
-            onClick={ () => setStartSearch(!startSearch) }
-            src={ searchIcon }
-          >
-            <img src={ searchIcon } alt="Search Icon" />
-          </button>
-        )}
-        <section className="meals">
-          <img src={ icon } alt="Icon" />
-          <h2 data-testid="page-title">{ title }</h2>
-        </section>
-        { startSearch === true ? <SearchBar /> : null}
+        <div className="container-title">
+          <h1 className="recipes-app-title">RECIPES</h1>
+          <h1 className="recipes-app-title-2">app</h1>
+          <Link to="/profile">
+            <img
+              data-testid="profile-top-btn"
+              src={ profileIcon }
+              alt="Profile Icon"
+              className="button-profile"
+            />
+          </Link>
+          {search || (
+            <input
+              type="image"
+              data-testid="search-top-btn"
+              value={ startSearch }
+              onClick={ () => setStartSearch(!startSearch) }
+              className="button-search"
+              src={ searchIcon }
+              alt="Search Icon"
+            />
+          )}
+        </div>
+        <div className="meals-title-e-image">
+          <section className="meals">
+            <img src={ icon } alt="Icon" className="image-meals" />
+            <h2 data-testid="page-title" className="title-header">{title}</h2>
+          </section>
+        </div>
+        {startSearch === true ? <SearchBar /> : null}
       </section>
     </header>
   );

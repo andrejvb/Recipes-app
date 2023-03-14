@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 // import { Button } from 'bootstrap';
+import Button from 'react-bootstrap/Button';
 import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import './Profile.css';
 
 function Profile() {
   const [emailUser, setEmailUser] = useState('');
@@ -17,37 +19,42 @@ function Profile() {
   return (
     <>
       <Header />
-      <h2 data-testid="profile-email">{emailUser}</h2>
-      <Link
-        to="/done-recipes"
-      >
-        <button
-          type="button"
-          data-testid="profile-done-btn"
+      <p data-testid="profile-email" className="email-profile">{emailUser}</p>
+      <div className="buttons-profile">
+        <Link
+          to="/done-recipes"
         >
-          Done Recipes
-        </button>
-      </Link>
-      <Link
-        to="/favorite-recipes"
-      >
-        <button
-          type="button"
-          data-testid="profile-favorite-btn"
+          <Button
+            type="button"
+            data-testid="profile-done-btn"
+            variant="secondary"
+          >
+            Done Recipes
+          </Button>
+        </Link>
+        <Link
+          to="/favorite-recipes"
         >
-          Favorite Recipes
-        </button>
-      </Link>
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-        onClick={ () => {
-          localStorage.clear();
-          history.push('/');
-        } }
-      >
-        Logout
-      </button>
+          <Button
+            type="button"
+            data-testid="profile-favorite-btn"
+            variant="secondary"
+          >
+            Favorite Recipes
+          </Button>
+        </Link>
+        <Button
+          type="button"
+          data-testid="profile-logout-btn"
+          variant="secondary"
+          onClick={ () => {
+            localStorage.clear();
+            history.push('/');
+          } }
+        >
+          Logout
+        </Button>
+      </div>
       <Footer />
     </>
   );

@@ -4,7 +4,7 @@ import React from 'react';
 import drinkIcon from '../images/drinkIcon.svg';
 import mealIcon from '../images/mealIcon.svg';
 
-import '../style/footerStyle.css';
+import './Login.css';
 
 function Footer() {
   return (
@@ -14,6 +14,7 @@ function Footer() {
           data-testid="drinks-bottom-btn"
           src={ drinkIcon }
           alt="ícone de drinks"
+          className="button-drinks"
         />
       </Link>
       <Link to="/meals">
@@ -21,6 +22,7 @@ function Footer() {
           data-testid="meals-bottom-btn"
           src={ mealIcon }
           alt="ícone de meals"
+          className="button-meals"
         />
       </Link>
     </footer>

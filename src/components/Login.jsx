@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import './Login.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -18,24 +19,26 @@ export default function Login() {
     history.push('/meals');
   };
   return (
-    <div>
-      <form>
-        <label htmlFor="email">
-          Email
+    <div className="capa-login">
+      <form
+        className="form-login"
+      >
+        <label htmlFor="email" className="email">
           <input
             onChange={ ({ target }) => setEmail(target.value) }
             name="email"
             data-testid="email-input"
             type="text"
+            placeholder="Email"
           />
         </label>
-        <label htmlFor="senha">
-          Senha
+        <label htmlFor="senha" className="senha">
           <input
             onChange={ ({ target }) => setSenha(target.value) }
             name="senha"
             data-testid="password-input"
             type="text"
+            placeholder="Password"
           />
         </label>
         <button
@@ -43,6 +46,7 @@ export default function Login() {
           data-testid="login-submit-btn"
           type="button"
           onClick={ saveLocalStorege }
+          className="button-login"
         >
           Enter
         </button>

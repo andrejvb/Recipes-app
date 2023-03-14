@@ -30,32 +30,40 @@ function Recipes() {
     <div>
       <Header />
       <ButtonRecipes />
-      <ul>
+      <div>
         {pathname === '/meals'
-          ? recipes.slice(0, MAX_RECIPES)
-            .map(({ idMeal, strMeal, strMealThumb,
-            }, idx) => (
-              <Link
-                key={ idMeal }
-                to={ `/meals/${idMeal}` }
-              >
-                <li key={ idMeal }>
-                  <Card index={ idx } title={ strMeal } thumb={ strMealThumb } />
-                </li>
-              </Link>
-            ))
-          : recipes.slice(0, MAX_RECIPES)
-            .map(({ strDrink, strDrinkThumb, idDrink }, idx) => (
-              <Link
-                key={ idDrink }
-                to={ `/drinks/${idDrink}` }
-              >
-                <li key={ idDrink }>
-                  <Card index={ idx } title={ strDrink } thumb={ strDrinkThumb } />
-                </li>
-              </Link>
-            ))}
-      </ul>
+          ? (
+            <div
+              className="div-img-container"
+            >
+              { recipes.slice(0, MAX_RECIPES)
+                .map(({ idMeal, strMeal, strMealThumb,
+                }, idx) => (
+                  <Link
+                    key={ idMeal }
+                    to={ `/meals/${idMeal}` }
+                    className="div-card"
+                  >
+                    <Card index={ idx } title={ strMeal } thumb={ strMealThumb } />
+                  </Link>
+                ))}
+            </div>)
+          : (
+            <div
+              className="div-img-container"
+            >
+              { recipes.slice(0, MAX_RECIPES)
+                .map(({ strDrink, strDrinkThumb, idDrink }, idx) => (
+                  <Link
+                    key={ idDrink }
+                    to={ `/drinks/${idDrink}` }
+                    className="div-card"
+                  >
+                    <Card index={ idx } title={ strDrink } thumb={ strDrinkThumb } />
+                  </Link>
+                ))}
+            </div>)}
+      </div>
       <Footer />
     </div>
   );
