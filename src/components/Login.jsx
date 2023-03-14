@@ -37,7 +37,7 @@ export default function Login() {
             onChange={ ({ target }) => setSenha(target.value) }
             name="senha"
             data-testid="password-input"
-            type="text"
+            type="password"
             placeholder="Password"
           />
         </label>
