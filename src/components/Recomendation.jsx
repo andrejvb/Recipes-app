@@ -14,19 +14,19 @@ function Recomendation({ recomendations }) {
       }, idx) => (
         <Carousel.Item as="li" key={ idx }>
           <div className="row">
-            <figure className="col-md-6" data-testid={ `${index1}-recommendation-card` }>
-              <img src={ image1 } alt={ title1 } />
+            <figure className="col-md-3" data-testid={ `${index1}-recommendation-card` }>
+              <img src={ image1 } alt={ title1 } style={ { width: '210px' } } />
             </figure>
-            <figure className="col-md-6" data-testid={ `${index2}-recommendation-card` }>
-              <img src={ image2 } alt={ title2 } />
+            <figure className="col-md-3" data-testid={ `${index2}-recommendation-card` }>
+              <img src={ image2 } alt={ title2 } style={ { width: '210px' } } />
             </figure>
           </div>
           <Carousel.Caption>
             <div className="row">
-              <h3 data-testid={ `${index1}-recommendation-title` } className="col-md-6">
+              <h3 data-testid={ `${index1}-recommendation-title` } className="col-md">
                 { title1 }
               </h3>
-              <h3 data-testid={ `${index2}-recommendation-title` } className="col-md-6">
+              <h3 data-testid={ `${index2}-recommendation-title` } className="col-md">
                 { title2 }
               </h3>
             </div>

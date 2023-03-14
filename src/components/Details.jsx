@@ -64,87 +64,97 @@ function Details({
           </Toast.Body>
         </Toast>
       </ToastContainer>
-      <Button
-        type="button"
-        data-testid="favorite-btn"
-        value={ favorite }
-        variant="secondary"
-        className="button-detalhes"
-        onClick={ (() => {
-          setFavorite([{
-            id,
-            type: strAlcoholic === 'Alcoholic' ? 'drink' : 'meal',
-            name: str,
-            category: strCategory,
-            image: strThumb,
-            nationality: strArea || '',
-            alcoholicOrNot: strAlcoholic || '',
-          }]);
-        }) }
-      >
-        Favoritar
-      </Button>
-      <Button
-        type="button"
-        data-testid="share-btn"
-        variant="secondary"
-        className="button-detalhes"
-        onClick={ () => {
-          copy(`http://localhost:3000${pathname}`);
-          setShow(true);
-        } }
-      >
-        Compartilhar
-      </Button>
-      <div className="div-detalhes">
-        <h1 data-testid="recipe-title" className="title-detalhes">{ str }</h1>
-        <img
-          data-testid="recipe-photo"
-          className="img-detalhes"
-          src={ strThumb }
-          alt="recipe"
-        />
-        <h3
-          data-testid="recipe-category"
-          className="category-detalhes"
-        >
-          { strAlcoholic || strCategory }
-        </h3>
-      </div>
-      <h3>Ingredientes</h3>
-      <ul>
-        {ingredients.map((ingredient, index) => (
-          <li key={ index }>
-            <span
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              { ingredient }
-            </span>
-          </li>
-        ))}
-      </ul>
-      <h3>Modo de preparo</h3>
-      <p data-testid="instructions">{ strInstructions }</p>
-      {youtubeId && <iframe
-        data-testid="video"
-        width="853"
-        height="480"
-        src={ `https://www.youtube.com/embed/${youtubeId}` }
-        allow="accelerometer; autoplay; clipboard-write;
+      <div className="div-geral-detalhes">
+        <div>
+          <Button
+            type="button"
+            data-testid="favorite-btn"
+            value={ favorite }
+            variant="secondary"
+            className="button-detalhes"
+            onClick={ (() => {
+              setFavorite([{
+                id,
+                type: strAlcoholic === 'Alcoholic' ? 'drink' : 'meal',
+                name: str,
+                category: strCategory,
+                image: strThumb,
+                nationality: strArea || '',
+                alcoholicOrNot: strAlcoholic || '',
+              }]);
+            }) }
+          >
+            Favoritar
+          </Button>
+          <Button
+            type="button"
+            data-testid="share-btn"
+            variant="secondary"
+            className="button-detalhes"
+            onClick={ () => {
+              copy(`http://localhost:3000${pathname}`);
+              setShow(true);
+            } }
+          >
+            Compartilhar
+          </Button>
+        </div>
+        <div className="div-detalhes">
+          <h2 data-testid="recipe-title" className="title-detalhes">{ str }</h2>
+          <img
+            data-testid="recipe-photo"
+            className="img-detalhes"
+            src={ strThumb }
+            alt="recipe"
+          />
+          <h3
+            data-testid="recipe-category"
+            className="category-detalhes"
+          >
+            { strAlcoholic || strCategory }
+          </h3>
+        </div>
+        <div className="div-ingredientes">
+          <h3>Ingredientes</h3>
+          <ul>
+            {ingredients.map((ingredient, index) => (
+              <li key={ index }>
+                <span
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  { ingredient }
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <h3>Modo de preparo</h3>
+        <div className="preparo">
+          <p data-testid="instructions">{ strInstructions }</p>
+        </div>
+        {youtubeId && <iframe
+          data-testid="video"
+          width="853"
+          height="480"
+          src={ `https://www.youtube.com/embed/${youtubeId}` }
+          allow="accelerometer; autoplay; clipboard-write;
         encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-        title="Embedded youtube"
-      />}
-      <Recomendation recomendations={ recomendations } />
-      {isDone || (
-        <Link
-          className="fixed-bottom"
-          data-testid="start-recipe-btn"
-          to={ `${pathname}/in-progress` }
-        >
-          { isInProgress ? PROGRESS_RECIPE : START_RECIPE }
-        </Link>
-      )}
+          allowFullScreen
+          title="Embedded youtube"
+        />}
+      </div>
+      <div className="recomendacao">
+        <Recomendation recomendations={ recomendations } />
+        {isDone || (
+          <Link
+            className="fixed-bottom"
+            data-testid="start-recipe-btn"
+            to={ `${pathname}/in-progress` }
+          >
+            { isInProgress ? PROGRESS_RECIPE : START_RECIPE }
+          </Link>
+        )}
+      </div>
     </section>
   );
 }
