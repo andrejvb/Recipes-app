@@ -14,20 +14,9 @@ body {
 
 .capa-login {
   display: flex;
-  align-itens: center;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
-
 }
 
-.email {
-  
-}
 
-.senha {
-  
-}
-
-.button-login {
- 
-}
